@@ -52,7 +52,7 @@ export class AppComponent {
   public monthBarChart: ChartData<'bar'> = {
     labels: this.getMonthLabels(),
     datasets: [
-      { data: [], label: 'Fish Ratio Ratio' },
+      { data: [], label: 'Fish Ratio' },
       { data: [], label: 'Ratio two fish' },
       { data: [], label: 'Ratio two regs' },
       { data: [], label: 'Ratio one reg one fish' },
