@@ -1,6 +1,14 @@
 
 <div style="display: flex; flex-direction: row; padding: 1rem; margin-top: 1rem">
-  <div style="flex-direction: column;">
+  <mat-form-field>
+    <mat-label>Select Nick</mat-label>
+    <mat-select [(value)]="selected">
+      <mat-option value="tuquedise">tuquedise</mat-option>
+      <mat-option value="MrsBandicoot">MrsBandicoot</mat-option>
+      <mat-option value="illotuquedise">illotuquedise</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div style="flex-direction: column; margin-left: 1rem">
     <button mat-stroked-button (click)="tournamentsInput.click()">
       Select Tournament files
       <mat-icon>upload</mat-icon>

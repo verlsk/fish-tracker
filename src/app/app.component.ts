@@ -6,6 +6,8 @@ import { CalculateRequest } from '../models/calculate-request';
 import { CalculateService } from './services/calculate.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
@@ -15,7 +17,7 @@ import { DayData, ResponseEntity } from '../models/response';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MatButtonModule, MatIconModule, NgChartsModule],
+  imports: [CommonModule, RouterOutlet, MatButtonModule, MatIconModule, NgChartsModule, MatFormFieldModule, MatSelectModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -65,7 +67,8 @@ export class AppComponent {
   playersOcc: Map<string, number> = new Map();
   enableSend: boolean = false;
   playersFileName: string = '';
-
+  selected: string = 'tuquedise';
+   
   constructor(private calculateService: CalculateService) {
 
   }
@@ -87,7 +90,7 @@ export class AppComponent {
           const tournament: Tournament = { players: [], date: new Date() };
 
           for (const line of result.split(/[\r\n]+/)) {
-            if (line.includes('Player') && !line.includes('tuquedise') && !line.includes('Players')) {
+            if (line.includes('Player') && !line.includes(this.selected) && !line.includes('Players')) {
               const player = line.split(',')[1].split(': ')[1];
               tournament.players.push(player);
             } else if (line.includes('Started')) {
@@ -130,7 +133,7 @@ export class AppComponent {
         const result = reader.result as string;
         const lines = result.split(/[\r\n]+/);
         for (let i = 1; i < lines.length - 1; i++) {
-          const [name, _chips, occ] = lines[i].split('\",\"');
+          const [name, occ] = lines[i].split('\",\"');
           this.playersOcc.set(name.replaceAll('"', ''), parseInt(occ.replaceAll(',', '')));
         }
         this.enableSend = this.tournaments.length > 0 && this.playersOcc.size > 0;
